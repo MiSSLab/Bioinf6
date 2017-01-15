@@ -15,18 +15,18 @@ namespace bioinf6
             var str2 = "KLTGRPRGVAFVRYNKREEAQ";
             var str3 = "VGCSVHKGFAFVQYVNERNAR";
 
-            Sequence AAsequence1 = new Sequence(str1, regex);
-            Sequence AAsequence2 = new Sequence(str2, regex);
-            Sequence AAsequence3 = new Sequence(str3, regex);
+            Match m1 = new Match(str1, regex);
+            Match m2 = new Match(str2, regex);
+            Match m3 = new Match(str3, regex);
 
-            char[] result1 = AAsequence1.Match();
-            char[] result2 = AAsequence2.Match();
-            char[] result3 = AAsequence3.Match();
+            char[] result1 = m1.FindMatch();
+            char[] result2 = m2.FindMatch();
+            char[] result3 = m3.FindMatch();
 
             Console.WriteLine(str1);
             Console.WriteLine(result1);
             Console.WriteLine(System.Environment.NewLine);
-
+            
             Console.WriteLine(str2);
             Console.WriteLine(result2);
             Console.WriteLine(System.Environment.NewLine);

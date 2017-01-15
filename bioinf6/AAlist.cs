@@ -9,56 +9,24 @@ namespace bioinf6
     public class AAlist
     {
         protected IList<char> list;
+
         public AAlist(string s)
         {
-            this.list = s.ToCharArray();
+            list = s.ToCharArray();
         }
+
         public int Count()
         {
             return list.Count();
         }
-        public bool Contains(string str)
-        {
-            if (str.StartsWith("["))
-            {
-                for(int l = 0; l < list.Count; l++)
-                {
-                    for (int s = 1; s < str.Length - 1; s++)
-                    {
-                        if(list[l] == str[s]) return true;
-                    }
-                }
-            }
-            if (str.StartsWith("{"))
-            {
-                int check = 0;
-                for (int l = 0; l < list.Count; l++)
-                {
-                    for (int s = 1; s < str.Length - 1; s++)
-                    {
-                        if (list[l] == str[s]) check = 1;
-                    }
-                }
-                if(check == 0) return true;
-                else return false;
 
-            }
-            if (str.StartsWith("x"))
-            {
-                return true;
-            }
-            if(list.ToString().Contains(str)) return true;
-            else return false;
-        }
-
-        public char Find(int l, string str)
+        public string Find(int l, string str)
         {
-            //Console.WriteLine(str + " " + list[l]);
             if (str.StartsWith("["))
             {
                 for (int s = 1; s < str.Length - 1; s++)
                 {
-                    if (list[l] == str[s]) return list[l];
+                    if (list[l] == str[s]) return list[l].ToString();
                 }
             }
             if (str.StartsWith("{"))
@@ -68,28 +36,59 @@ namespace bioinf6
                 {
                     if (list[l] == str[s]) check = 1;
                 }
-
-                if (check == 0)
-                {
-                    return list[l];
-                }
-                else
-                {
-                    check = 0;
-                }
+                if (check == 0) return list[l].ToString();
             }
             if (str.StartsWith("x"))
             {
-                return list[l];
+                if (str.Length == 1)
+                {
+                    return list[l].ToString();
+                }
+                else //x(3)
+                {
+                    string result = "";
+                    int number = Int32.Parse(str[2].ToString());
+                    for (int i = 0; i < number; i++)
+                        result += list[l + i].ToString();
+                    return result;
+                }
             }
             else if(str[0] == list[l])
             {
-                return list[l];
+                if (str.Length == 1) //G
+                {
+                    return list[l].ToString();
+                }
+                else
+                {
+                    if (str.Contains(",")) //G(2,4)
+                    {
+                        int counter = 0;
+                        int minNumber = Int32.Parse(str[2].ToString());
+                        int maxNumber = Int32.Parse(str[4].ToString());
+                        string result = "";
+                        for (int i = 0; i < maxNumber; i++)
+                        {
+                            if (list[l + i] == str[0]) counter++;
+                            result += str[0];
+                        }
+                        if (counter >= minNumber && counter <= maxNumber) return result;
+                    }
+                    else //G(4)
+                    {
+                        int counter = 0;
+                        int number = Int32.Parse(str[2].ToString());
+                        string result = "";
+                        for (int i = 0; i < number; i++)
+                        {
+                            if (list[l + i] == str[0]) counter++;
+                            result += str[0];
+                        }
+                        if (counter == number) return result;
+                    }
+                }
             }
-            else
-            {
-                return '0';
-            }
+            return "0";
         }
     }
 }
