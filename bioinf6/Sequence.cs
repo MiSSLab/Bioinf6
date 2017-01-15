@@ -10,13 +10,15 @@ namespace bioinf6
     public class Sequence
     {
         protected AAlist list;
-        protected List<char> matched;
+        protected char[] matched;
         protected List<string> queries;
 
         public Sequence(string aminoAcids, string regex)
         {
-            list.CreateAAlist(aminoAcids);
+            list = new AAlist(aminoAcids);
             queries = regex.Split('-').ToList();
+            int length = queries.Count();
+            matched = new char[length];
         }
 
         public override string ToString()
@@ -24,18 +26,32 @@ namespace bioinf6
             return string.Join(" ", list);
         }
 
-        private bool Containing(List<string> s)
+        public char[] Match()
         {
-            return true;
-        }
-
-        public List<char> Match()
-        {
-            for(int i = 0; i < queries.Count; i++)
+            if (list != null)
             {
-                if (list.Contains(queries[i])){
-                    char matching = list.Find(queries[i]);
-                    matched.Add(matching);
+                for (int i = 0; i < list.Count(); i++)
+                {
+                    //Console.WriteLine("------------------" + i);
+                    int q = 0;
+                    int totalMatch = 0;
+                    char matching = '1';
+                    int l = i;
+                    while (matching != '0')
+                    {
+                        matching = '0';
+                        matching = list.Find(l, queries[q]);
+                        //Console.WriteLine(matching);
+                        matched[q] = matching;
+                        totalMatch++;
+                        q++;
+                        l++;
+                        if (totalMatch == queries.Count())
+                        {
+                            //Console.WriteLine(matched);
+                            return matched;
+                        }
+                    }
                 }
             }
             return matched;

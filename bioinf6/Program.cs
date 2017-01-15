@@ -15,12 +15,25 @@ namespace bioinf6
             var str2 = "KLTGRPRGVAFVRYNKREEAQ";
             var str3 = "VGCSVHKGFAFVQYVNERNAR";
 
-            //Pattern query = new Pattern(regex);
             Sequence AAsequence1 = new Sequence(str1, regex);
-            AAsequence1.Match();
+            Sequence AAsequence2 = new Sequence(str2, regex);
+            Sequence AAsequence3 = new Sequence(str3, regex);
 
-            //Console.WriteLine(query.ToString());
-            Console.WriteLine(AAsequence1.ToString());
+            char[] result1 = AAsequence1.Match();
+            char[] result2 = AAsequence2.Match();
+            char[] result3 = AAsequence3.Match();
+
+            Console.WriteLine(str1);
+            Console.WriteLine(result1);
+            Console.WriteLine(System.Environment.NewLine);
+
+            Console.WriteLine(str2);
+            Console.WriteLine(result2);
+            Console.WriteLine(System.Environment.NewLine);
+
+            Console.WriteLine(str3);
+            Console.WriteLine(result3);
+
             Console.ReadLine();
         }
     }

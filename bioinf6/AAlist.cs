@@ -9,10 +9,13 @@ namespace bioinf6
     public class AAlist
     {
         protected IList<char> list;
-        protected List<char> matched;
-        public void CreateAAlist(string s)
+        public AAlist(string s)
         {
-            list = s.ToCharArray();
+            this.list = s.ToCharArray();
+        }
+        public int Count()
+        {
+            return list.Count();
         }
         public bool Contains(string str)
         {
@@ -48,41 +51,40 @@ namespace bioinf6
             else return false;
         }
 
-        public char Find(string str)
+        public char Find(int l, string str)
         {
+            //Console.WriteLine(str + " " + list[l]);
             if (str.StartsWith("["))
             {
-                for (int l = 0; l < list.Count; l++)
+                for (int s = 1; s < str.Length - 1; s++)
                 {
-                    for (int s = 1; s < str.Length - 1; s++)
-                    {
-                        if (list[l] == str[s]) return list[l];
-                    }
+                    if (list[l] == str[s]) return list[l];
                 }
             }
             if (str.StartsWith("{"))
             {
                 int check = 0;
-                for (int l = 0; l < list.Count; l++)
+                for (int s = 1; s < str.Length - 1; s++)
                 {
-                    for (int s = 1; s < str.Length - 1; s++)
-                    {
-                        if (list[l] == str[s]) check = 1;
-                    }
+                    if (list[l] == str[s]) check = 1;
+                }
 
-                    if (check == 0)
-                    {
-                        return list[l];
-                    }
-                    else
-                    {
-                        check = 0;
-                    }
+                if (check == 0)
+                {
+                    return list[l];
+                }
+                else
+                {
+                    check = 0;
                 }
             }
             if (str.StartsWith("x"))
             {
-                return list[0];
+                return list[l];
+            }
+            else if(str[0] == list[l])
+            {
+                return list[l];
             }
             else
             {
